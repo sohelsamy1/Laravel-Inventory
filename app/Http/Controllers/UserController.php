@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JWTToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -21,13 +22,32 @@ class UserController extends Controller
                  'message' => 'User Registration successful'
             ], 200);
         }catch(\Throwable $e){
+            return response()->json([
+           'status' => 'failed',
+           'message' => 'User Registration failed'
+            ], 200);
 
        }
      }
 
 
-       public function userloginPage(){
-        return view('pages.auth.loging-page');
+       public function userlogin(Request $request){
+        $user_id = User::where(['email' => $request->email, 'password' => $request->password])->select('id')->first();
+
+        if($user_id !== null){
+         $token = JWTToken::createToken($request->email, $user_id);
+         return response()->json([
+                'status' => 'failed',
+                 'message' => 'User Login successful'
+         ], 200)->cookie('token', $token, time() + 60 * 60 * 24);
+        }else{
+            return response()->json([
+                'status' => 'failed',
+                 'message' => 'User Login failed'
+            ]);
+        }
+
+
     }
 
           public function restPasswordPage(){
