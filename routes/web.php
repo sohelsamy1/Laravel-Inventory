@@ -9,14 +9,21 @@ use App\Http\Controllers\DashboardController;
 // Route::get('/', function () {
 //     return view('home');
 // });
+//Backend
 
-Route::get('/', [HomeController::class, 'homePage']);
-Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboardPage');
-Route::get('/categoryPage', [CategoryController::class, 'categoryPage'])->name('categoryPage');
-Route::get('/userRegistration', [UserController::class, 'userRegistrationPage']);
-Route::get('/userLogin', [UserController::class, 'userloginPage']);
-Route::get('/restPassword', [UserController::class, 'restPasswordPage']);
-Route::get('/sendOtp', [UserController::class, 'sendOtpPage']);
-Route::get('/verifyOtp', [UserController::class, 'verifyOtpPage']);
-Route::get('/verifyOtp', [UserController::class, 'verifyOtpPage']);
-Route::get('/userProfile', [UserController::class, 'profilePage']);
+//user Route
+Route::post('/user-registration', [UserController::class, 'userRegistration']);
+Route::post('/user-login', [UserController::class, 'userlogin']);
+Route::get('/logout', [UserController::class, 'logout']);
+Route::post('/send-otp', [UserController::class, 'sendOTP']);
+
+// Route::get('/', [HomeController::class, 'homePage']);
+// Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboardPage');
+// Route::get('/categoryPage', [CategoryController::class, 'categoryPage'])->name('categoryPage');
+// Route::get('/userRegistration', [UserController::class, 'userRegistrationPage']);
+// Route::get('/userLogin', [UserController::class, 'userloginPage']);
+// Route::get('/restPassword', [UserController::class, 'restPasswordPage']);
+// Route::get('/sendOtp', [UserController::class, 'sendOtpPage']);
+// Route::get('/verifyOtp', [UserController::class, 'verifyOtpPage']);
+// Route::get('/verifyOtp', [UserController::class, 'verifyOtpPage']);
+// Route::get('/userProfile', [UserController::class, 'profilePage']);
