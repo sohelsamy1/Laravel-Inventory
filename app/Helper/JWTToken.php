@@ -40,7 +40,7 @@ class JWTToken{
      public static function verifyToken($token){
          try{
             if(!$token){
-                return "Invalid Token";
+                return 'Invalid Token';
             }else{
                 $key = env('JWT_KEY');
                 $payload = JWT::decode($token, new Key($key, 'HS256'));
@@ -49,7 +49,7 @@ class JWTToken{
             }
 
          }catch(\Throwable $e){
-            return $e->getMessage();
+            return 'Invalid Token';
          }
      }
 
