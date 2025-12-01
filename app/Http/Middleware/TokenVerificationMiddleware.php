@@ -28,7 +28,7 @@ class TokenVerificationMiddleware
         }else{
 
        $request->headers->set('email', $payload->user_email);
-       
+
        if(isset($payload->user_id)){
         $request->headers->set('user_id', $payload->user_id);
        }

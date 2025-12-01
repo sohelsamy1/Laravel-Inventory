@@ -34,13 +34,13 @@ class UserController extends Controller
      }
 
 
-       public function userlogin(Request $request){
+       public function userLogin(Request $request){
         $user_id = User::where(['email' => $request->email, 'password' => $request->password])->select('id')->first();
 
         if($user_id !== null){
-         $token = JWTToken::createToken($request->email, $user_id);
+         $token = JWTToken::createToken($request->email, $user_id->id);
          return response()->json([
-                'status' => 'failed',
+                'status' => 'success',
                  'message' => 'User Login successful'
          ], 200)->cookie('token', $token, time() + 60 * 60 * 24);
         }else{
