@@ -10,18 +10,18 @@ class ProductController extends Controller
 {
     public function CreateProduct(Request $request){
          $user_id = $request->header('user_id');
-         if($request->hasFile('image')){
-            $file = $request->file('image');
-            $fileName = $user_id.'-'.time().'-'.$file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads',$fileName,'public');
-         }
+        //  if($request->hasFile('image')){
+        //     $file = $request->file('image');
+        //     $fileName = $user_id.'-'.time().'-'.$file->getClientOriginalName();
+        //     $filePath = $file->storeAs('uploads',$fileName,'public');
+        //  }
 
         //Save To Database
         return Product::create([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'unit' => $request->input('unit'),
-            'img_url' => $filePath,
+            'img_url' => 'test',
             'category_id' => $request->input('category_id'),
             'user_id' => $user_id
         ]);
@@ -39,7 +39,7 @@ class ProductController extends Controller
   }
 
   public function ProductDelete(Request $request){
-    
+
       $user_id = $request->header('user_id');
       $product_id = $request->input('id');
 

@@ -46,11 +46,14 @@ Route::post('/product-update', [ProductController::class, 'ProductUpdate'])->mid
 
 //Invoice API
 Route::post('/invoice-create', [InvoiceController::class, 'InvoiceCreate'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/invoice-select', [InvoiceController::class, 'invoiceSelect'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/invoice-details', [InvoiceController::class, 'invoiceDetails'])->middleware(TokenVerificationMiddleware::class);
+Route::post('/invoice-delete', [InvoiceController::class, 'invoiceDelete'])->middleware(TokenVerificationMiddleware::class);
 
 
 //Dashboard summery
 Route::get('/summary', [DashboardController::class, 'summary'])->middleware(TokenVerificationMiddleware::class);
-
+Route::get('/sales-report', [DashboardController::class, 'salesReport'])->middleware(TokenVerificationMiddleware::class);
 
 // Route::get('/', [HomeController::class, 'homePage']);
 // Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboardPage');
