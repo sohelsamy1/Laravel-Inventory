@@ -39,7 +39,7 @@ async function getList() {
 
 
     showLoader();
-    let res=await axios.get("/category-list");
+    let res=await axios.get("/list-category");
     hideLoader();
 
     let tableList=$("#tableList");
