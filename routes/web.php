@@ -17,7 +17,6 @@ Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('d
 Route::get('/categoryPage', [CategoryController::class, 'categoryPage'])->name('categoryPage')->middleware(TokenVerificationMiddleware::class);
 Route::get('/customerPage', [CustomerController::class, 'customerPage'])->name('customerPage')->middleware(TokenVerificationMiddleware::class);
 Route::get('/productPage', [ProductController::class, 'productPage'])->name('productPage')->middleware(TokenVerificationMiddleware::class);
-
 Route::get('/userRegistration', [UserController::class, 'userRegistrationPage'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/userLogin', [UserController::class, 'userloginPage'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/resetPassword', [UserController::class, 'restPasswordPage'])->middleware(TokenVerificationMiddleware::class);
