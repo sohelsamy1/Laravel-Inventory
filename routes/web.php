@@ -24,6 +24,7 @@ Route::get('/resetPassword', [UserController::class, 'restPasswordPage'])->middl
 Route::get('/sendOtp', [UserController::class, 'sendOtpPage'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/verifyOtp', [UserController::class, 'verifyOtpPage'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/userProfile', [UserController::class, 'profilePage'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/invoicePage',[InvoiceController::class,'InvoicePage'])->name('InvoicePage')->middleware([TokenVerificationMiddleware::class]);
 
 
 //Backend

@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\DB;
 class InvoiceController extends Controller
 {
 
-//    public function SalPage():View{
-//     return view('pages.dashboard.sale-page');
-//    }
+  function InvoicePage(){
+        return view('pages.dashboard.invoice-page');
+    }
 
    public function InvoiceCreate(Request $request){
 
