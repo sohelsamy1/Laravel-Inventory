@@ -15,6 +15,8 @@ use App\Http\Middleware\TokenVerificationMiddleware;
 Route::get('/', [HomeController::class, 'homePage']);
 Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboardPage')->middleware(TokenVerificationMiddleware::class);
 Route::get('/categoryPage', [CategoryController::class, 'categoryPage'])->name('categoryPage');
+Route::get('/customerPage', [CustomerController::class, 'customerPage'])->name('customerPage');
+
 Route::get('/userRegistration', [UserController::class, 'userRegistrationPage']);
 Route::get('/userLogin', [UserController::class, 'userloginPage']);
 Route::get('/resetPassword', [UserController::class, 'restPasswordPage']);
@@ -44,7 +46,6 @@ Route::post('/update-category', [CategoryController::class, 'CategoryUpdate'])->
 
 
 //Customer Page
-Route::get('/customerPage', [CustomerController::class, 'CustomerPage'])->middleware(TokenVerificationMiddleware::class);
 
 
 //Customer Api

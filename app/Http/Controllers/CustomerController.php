@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
 
-    public function CustomerPage(){
+    public function customerPage(){
         return view('pages.dashboard.customer-page');
     }
 
