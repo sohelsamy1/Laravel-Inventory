@@ -37,7 +37,7 @@ getList();
 
 async function getList() {
     showLoader();
-    let res=await axios.get("/customer-list");
+    let res=await axios.get("/list-customer");
     hideLoader();
 
     let tableList=$("#tableList");

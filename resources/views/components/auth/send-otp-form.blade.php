@@ -15,7 +15,6 @@
     </div>
 </div>
 
-
 <script>
     async function VerifyEmail() {
     let email = document.getElementById('email').value;
@@ -41,11 +40,9 @@
             hideLoader();
             if (err.response && err.response.status === 422) {
                 let errors = err.response.data.errors;
-                for (let field in errors) {
-                        if (errors.hasOwnProperty(field)) {
-                            errorToast(errors[field][0]);
-                        }
-                    }
+                for (let [field, messages] of Object.entries(errors)) {
+                    errorToast(messages[0]);
+                }
             } else {
                 errorToast("Something went wrong");
             }

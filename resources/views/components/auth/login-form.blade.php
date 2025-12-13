@@ -24,6 +24,7 @@
     </div>
 </div>
 
+
 <script>
     async function SubmitLogin() {
         let email = document.getElementById('email').value;
@@ -44,9 +45,7 @@
 
                 if (res.status === 200 && res.data.status === 'success') {
                     successToast(res.data.message);
-                    setTimeout(function () {
-                        window.location.href = "/dashboard";
-                    }, 2000);
+                    window.location.href = "/dashboard";
                 } else {
                     errorToast(res.data.message);
                 }
@@ -62,6 +61,7 @@
                 } else if (err.response && err.response.status === 401) {
                     errorToast(err.response.data.message);
                 } else {
+                    // errorToast("Something went wrong");
                     errorToast(err.response.data.message);
                 }
             }

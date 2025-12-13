@@ -9,18 +9,20 @@ use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
+
+
 class UserController extends Controller
 {
+
     function userLoginPage():View{
-        return view('pages.auth.login-page');
+     return view('pages.auth.login-page');
     }
 
-    function userRegistrationPage(){
+    function userRegistrationPage():View{
         return view('pages.auth.registration-page');
     }
 
@@ -31,10 +33,14 @@ class UserController extends Controller
         return view('pages.auth.verify-otp-page');
     }
 
-    function restPasswordPage():View{
+    function ResetPasswordPage():View{
         return view('pages.auth.reset-pass-page');
     }
-   
+
+    function profilePage():View{
+        return view('pages.dashboard.profile-page');
+    }
+
     // Registration
     public function userRegistration(Request $request)
     {
@@ -115,11 +121,10 @@ class UserController extends Controller
             }
 
         } catch (\Throwable $e) {
-        //    Log::error($e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Something went wrong',
-                // 'message' => $e->getMessage(),
+                // 'message' => 'Something went wrong',
+                'message' => $e->getMessage(),
                 'error' => app()->environment('production') ? 'Server Error' : $e->getMessage()
             ], 500);
         }
@@ -133,7 +138,7 @@ class UserController extends Controller
         //     'message' => 'User Logout successful'
         // ])->cookie('token',  null, -1);
 
-        return redirect('/userLogin')
+        return redirect('/userLogin') // or route('login') if named route
         ->withCookie(cookie('token', null, -1));
     }
 
@@ -184,6 +189,7 @@ class UserController extends Controller
         try {
             // Step 1: Validate input
             $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:users,email',
                 'otp' => 'required|digits:4'
             ]);
 
@@ -301,7 +307,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => 'User Profile updated successfully'
             ], 200);
-       }catch(\Throwable $e){
+       }catch(Exception $e){
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Unable to update user profile'

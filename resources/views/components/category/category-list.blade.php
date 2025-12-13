@@ -76,7 +76,7 @@ async function getList() {
 
     new DataTable('#tableData',{
        order:[[0,'desc']],
-       lengthMenu:[3,5,15,20,30]
+       lengthMenu:[5,10,15,20,30]
    });
 
 }

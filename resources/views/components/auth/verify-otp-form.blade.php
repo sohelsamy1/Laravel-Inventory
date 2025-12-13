@@ -25,8 +25,8 @@
         showLoader();
         try {
             let res = await axios.post('/verify-otp', {
-                email: sessionStorage.getItem('email'),
-                otp: otp
+                otp: otp,
+                email: sessionStorage.getItem('email')
             });
 
             hideLoader();
@@ -57,4 +57,3 @@
 }
 
 </script>
-

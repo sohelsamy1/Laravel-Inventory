@@ -26,8 +26,8 @@
 </div>
 
 
-
 <script>
+
 
    async function FillUpUpdateForm(id){
         document.getElementById('updateID').value=id;
@@ -66,5 +66,7 @@
 
 
     }
+
+
 
 </script>

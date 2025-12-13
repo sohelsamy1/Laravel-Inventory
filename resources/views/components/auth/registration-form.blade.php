@@ -40,8 +40,6 @@
     </div>
 </div>
 
-
-
 <script>
     async function onRegistration() {
         let email = document.getElementById('email').value;
@@ -63,7 +61,6 @@
         } else {
             showLoader();
             try {
-
                 let res = await axios.post("/user-registration", {
                     email: email,
                     firstName: firstName,
@@ -71,7 +68,6 @@
                     mobile: mobile,
                     password: password
                 });
-
 
                 hideLoader();
 
@@ -86,7 +82,6 @@
 
             } catch (err) {
                 hideLoader();
-
                 if (err.response && err.response.status === 422) {
                     // Show each validation error
                     let errors = err.response.data.errors;
@@ -100,6 +95,5 @@
                 }
             }
         }
-}
-</script>
-
+    }
+    </script>

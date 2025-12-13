@@ -19,7 +19,6 @@
 </div>
 
 
-
 <script>
     async function ResetPassword() {
     let password = document.getElementById('password').value;
@@ -39,7 +38,6 @@
                 password_confirmation: cpassword
             });
 
-            console.log(res);
             hideLoader();
 
             if (res.status === 200 && res.data.status === 'success') {
@@ -66,6 +64,4 @@
         }
     }
 }
-</script>
-
-
+    </script>

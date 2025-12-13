@@ -1,103 +1,113 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Invoice;
-// use Illuminate\View\View;
 use App\Models\Customer;
-use Illuminate\Http\Request;
-use PHPUnit\Runner\Exception;
-use App\Models\InvoiceProduct;
+use Exception;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Invoice;
+use App\Models\InvoiceProduct;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Throwable;
 
 class InvoiceController extends Controller
 {
 
-  function InvoicePage(){
+    function InvoicePage():View{
         return view('pages.dashboard.invoice-page');
     }
 
-   public function InvoiceCreate(Request $request){
+    function SalePage():View{
+        return view('pages.dashboard.sale-page');
+    }
 
-    DB::beginTransaction();
+    function invoiceCreate(Request $request){
 
-    try {
-        $user_id = $request->header('user_id');
-        $total = $request->input('total');
-        $discount = $request->input('discount');
-        $vat = $request->input('vat');
-        $payable = $request->input('payable');
-        $customer_id = $request->input('customer_id');
+        DB::beginTransaction();
 
-      $invoice = Invoice::create([
-            'total' =>$total,
-            'discount' =>$discount,
-            'vat' =>$vat,
-            'payable' =>$payable,
-            'user_id' =>$user_id,
-            'customer_id' =>$customer_id,
-      ]);
+        try {
 
-       $invoiceID = $invoice->id;
-       $products = $request->input('products');
+        $user_id=$request->header('user_id');
+        $total=$request->input('total');
+        $discount=$request->input('discount');
+        $vat=$request->input('vat');
+        $payable=$request->input('payable');
 
-       foreach ($products as $EachProduct){
-        InvoiceProduct::create([
-            'invoice_id' => $invoiceID,
-            'user_id' => $user_id,
-            'product_id' => $EachProduct['product_id'],
-            'qty' => $EachProduct['qty'],
-            'sale_price' => $EachProduct['sale_price'],
-            // 'sale_price' =>$EachProduct['qtsale_price'],
+        $customer_id=$request->input('customer_id');
+
+        $invoice= Invoice::create([
+            'total'=>$total,
+            'discount'=>$discount,
+            'vat'=>$vat,
+            'payable'=>$payable,
+            'user_id'=>$user_id,
+            'customer_id'=>$customer_id,
         ]);
-       }
+
+
+       $invoiceID=$invoice->id;
+
+       $products= $request->input('products');
+
+       foreach ($products as $EachProduct) {
+            InvoiceProduct::create([
+                'invoice_id' => $invoiceID,
+                'user_id'=>$user_id,
+                'product_id' => $EachProduct['product_id'],
+                'qty' =>  $EachProduct['qty'],
+                'sale_price'=>  $EachProduct['sale_price'],
+            ]);
+        }
+
        DB::commit();
 
        return 1;
 
-        }catch (Exception $e){
-            DB::rollBack();
-            return $e->getMessage();
         }
-   }
+        catch (Exception $e) {
 
-    public function invoiceSelect(Request $request){
-       $user_id = $request->header('user_id');
-       return Invoice::where('user_id',$user_id)->with('customer')->get();
-    }
-
-     public function invoiceDetails(Request $request){
-     $user_id = $request->header('user_id');
-
-     $customerDetails = Customer::where('user_id', $user_id)->where('id', $request->input('cus_id'))->first();
-     $invoiceTotal = Invoice::where('user_id', $user_id)->where('id', $request->input('inv_id'))->first();
-     $invoiceProduct = InvoiceProduct::where('invoice_id', $request->input('inv_id'))
-     ->where('user_id', $user_id)->with('product')
-     ->get();
-     return array(
-        'customer' => $customerDetails,
-        'invoice' => $invoiceTotal,
-        'product' => $invoiceProduct,
-     );
+            DB::rollBack();
+            return 0;
+        }
 
     }
 
-     public function invoiceDelete(Request $request){
-      DB::beginTransaction();
-      try{
+    function invoiceSelect(Request $request){
         $user_id=$request->header('user_id');
-        InvoiceProduct::where('invoice_id',$request->input('inv_id'))
-        ->where('user_id', $user_id)
-        ->delete();
-        Invoice::where('id', $request->input('inv_id'))->delete();
-        DB::commit();
-        return 1;
-      }
-        catch(Exception $e){
+        return Invoice::where('user_id',$user_id)->with('customer')->get();
+    }
+
+    function InvoiceDetails(Request $request){
+        $user_id=$request->header('user_id');
+
+        $customerDetails=Customer::where('user_id',$user_id)->where('id',$request->input('cus_id'))->first();
+        $invoiceTotal=Invoice::where('user_id','=',$user_id)->where('id',$request->input('inv_id'))->first();
+        $invoiceProduct=InvoiceProduct::where('invoice_id',$request->input('inv_id'))
+            ->where('user_id',$user_id)->with('product')
+            ->get();
+        return array(
+            'customer'=>$customerDetails,
+            'invoice'=>$invoiceTotal,
+            'product'=>$invoiceProduct,
+        );
+    }
+
+    function invoiceDelete(Request $request){
+        DB::beginTransaction();
+        try {
+            $user_id=$request->header('user_id');
+
+            InvoiceProduct::where('invoice_id',$request->input('inv_id'))
+                ->where('user_id',$user_id)
+                ->delete();
+
+            Invoice::where('id',$request->input('inv_id'))->delete();
+            DB::commit();
+            return 1;
+        }
+        catch (Exception $e){
             DB::rollBack();
             return 0;
         }
     }
-
 }
